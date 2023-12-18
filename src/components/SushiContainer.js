@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import MoreButton from "./MoreButton";
 import Sushi from "./Sushi";
 
-function SushiContainer(props) {
+function SushiContainer({ onEat }) {
   const [sushis, setSushis] = useState([]);
   const [endIndex, setEndIndex] = useState(4);
   const [startIndex, setStartIndex] = useState(0);
@@ -24,6 +24,11 @@ function SushiContainer(props) {
     setEndIndex(endIndex + 4);
   }
 
+  function handleEat(id) {
+    const eatenSushi = sushis.find((sushi) => sushi.id === id);
+    onEat(eatenSushi);
+  }
+
   return (
     <div className="belt">
       {selectedSushis.map((sushi) => {
@@ -32,7 +37,8 @@ function SushiContainer(props) {
                     key={sushi.id}
                     name={sushi.name}
                     price={sushi.price}
-                    id={sushi.id}/>
+                    id={sushi.id}
+                    onEaten={handleEat}/>
           );
         })
       }
